@@ -785,7 +785,7 @@ export const getAppViewRoutes = (): RouteInterface[] => {
         {
             category: "extensions:develop.sidePanel.categories.pushProvider",
             component: lazy(() =>
-                import("@wso2is/admin.push-providers.v1" + "/pages/push-providers")
+                import("@wso2is/admin.push-providers.v1/pages/push-providers")
             ),
             exact: true,
             icon: {
