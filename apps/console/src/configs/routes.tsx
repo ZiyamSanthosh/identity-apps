@@ -74,6 +74,9 @@ export const getAppViewRoutes = (): RouteInterface[] => {
     const showStatusLabelForNewAuthzRuntimeFeatures: boolean =
         window["AppUtils"]?.getConfig()?.ui?.showStatusLabelForNewAuthzRuntimeFeatures;
 
+    const isPushProviderFeatureEnabled: boolean =
+        window["AppUtils"]?.getConfig()?.ui?.features?.pushProviders?.enabled;
+
     const defaultRoutes: RouteInterface[] = [
         {
             category: "extensions:manage.sidePanel.categories.userManagement",
@@ -739,9 +742,11 @@ export const getAppViewRoutes = (): RouteInterface[] => {
             exact: true,
             icon: { icon: <EnvelopeGearIcon fill="black" className="icon" /> },
             id: "notificationChannels",
-            name: "Notification Channels",
+            name:  isPushProviderFeatureEnabled ? "Notification Channels" : "Email & SMS",
             order: 16,
-            path: AppConstants.getPaths().get("NOTIFICATION_CHANNELS"),
+            path: isPushProviderFeatureEnabled
+                ? AppConstants.getPaths().get("NOTIFICATION_CHANNELS")
+                : `${ AppConstants.getDeveloperViewBasePath() }/email-and-sms`,
             protected: true,
             showOnSidePanel: true
         },
@@ -784,10 +789,10 @@ export const getAppViewRoutes = (): RouteInterface[] => {
             ),
             exact: true,
             icon: {
-                icon: getSidePanelIcons().sms
+                icon: getSidePanelIcons().push
             },
             id: "pushProviders",
-            name: "Push",
+            name: "Push Notification Provider",
             order: 18,
             path: AppConstants.getPaths().get("PUSH_PROVIDER"),
             protected: true,
